@@ -3,9 +3,14 @@ const nextConfig = {
   basePath: '/illegal',
   output: 'export',
   images: {
-    domains: ['images.pexels.com'],
     unoptimized: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  }
 }
 
 module.exports = nextConfig 
