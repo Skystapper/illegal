@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
+import { getImagePath } from '../utils/getImagePath'
 
 const Consultation = () => {
   const sectionRef = useRef<HTMLDivElement>(null)

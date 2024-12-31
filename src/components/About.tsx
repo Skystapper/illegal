@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import { Playfair_Display } from 'next/font/google'
 import { LegalScaleIcon, HandshakeIcon, AwardIcon } from './icons'
+import { getImagePath } from '../utils/getImagePath'
 
 const playfair = Playfair_Display({ subsets: ['latin'] })
 

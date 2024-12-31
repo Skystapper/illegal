@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-
+import { getImagePath } from '../utils/getImagePath'
 const Footer = () => {
   return (
     <footer className="bg-[#2D2D3D] text-gray-300 pt-16 pb-8">

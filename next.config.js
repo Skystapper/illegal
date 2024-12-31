@@ -1,16 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: '/illegal',
-  output: 'export',
   images: {
-    unoptimized: true,
+    domains: ['images.pexels.com'],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  }
 }
 
 module.exports = nextConfig 
