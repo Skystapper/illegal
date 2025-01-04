@@ -8,15 +8,15 @@ interface PricingCardProps {
 }
 
 const PricingCard = ({ title, price, features }: PricingCardProps) => {
-    return (
-        <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-[380px] bg-white rounded-3xl shadow-lg overflow-hidden" 
-      >
-        <div className="relative">
-          <div className="bg-burgundy-600 p-6 pb-16 relative overflow-hidden">
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="w-full max-w-[380px] bg-white rounded-3xl shadow-lg overflow-hidden h-full flex flex-col" 
+    >
+      <div className="relative flex-shrink-0">
+        <div className="bg-burgundy-600 p-6 pb-20 relative overflow-hidden h-[200px]"> {/* Reduced height, increased bottom padding */}
             {/* Multiple sweeping light beams */}
             {[...Array(3)].map((_, i) => (
               <motion.div
@@ -75,17 +75,19 @@ const PricingCard = ({ title, price, features }: PricingCardProps) => {
               />
             ))}
   
-            {/* Content */}
-            <div className="relative z-10">
-        <h3 className="text-2xl text-white mb-6">{title}</h3> {/* Increased margin */}
-        <div className="flex items-baseline text-white">
-          <span className="text-5xl font-bold">₹{price}</span> {/* Increased font size */}
-          <span className="ml-2 text-base">+ gov. fees</span> {/* Increased spacing and font size */}
+            {/* Content with flex layout for consistent spacing */}
+            <div className="relative z-10 h-full flex flex-col">
+            <div className="min-h-[60px] flex items-start"> {/* Reduced title container height */}
+              <h3 className="text-2xl text-white leading-tight">{title}</h3>
+            </div>
+            <div className="flex items-baseline text-white flex-wrap mb-4"> {/* Added bottom margin */}
+              <span className="text-5xl font-bold leading-none">₹{price}</span>
+              <span className="ml-2 text-base whitespace-nowrap">+ gov. fees</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
   
-          {/* Wave separator remains the same */}
+          {/* Wave separator */}
           <div className="absolute -bottom-1 left-0 right-0">
             <svg
               viewBox="0 0 400 50"
@@ -114,8 +116,8 @@ const PricingCard = ({ title, price, features }: PricingCardProps) => {
   
 
       {/* Features list */}
-      <div className="px-6 pt-2 pb-8 bg-white">
-        <ul className="space-y-4">
+      <div className="px-6 pt-2 pb-8 bg-white flex-1 flex flex-col">
+        <ul className="space-y-4 flex-1">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start text-gray-700">
               <svg 
@@ -131,7 +133,7 @@ const PricingCard = ({ title, price, features }: PricingCardProps) => {
                   d="M5 13l4 4L19 7" 
                 />
               </svg>
-              <span>{feature}</span>
+              <span className="text-sm">{feature}</span>
             </li>
           ))}
         </ul>

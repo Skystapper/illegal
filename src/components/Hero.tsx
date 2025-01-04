@@ -1,7 +1,72 @@
+'use client'
 import Image from 'next/image'
-import { getImagePath } from '../utils/getImagePath'
+import { useState } from 'react'
 
 const Hero = () => {
+  // Form state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  })
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null,
+    message: string
+  }>({ type: null, message: '' })
+
+  // Handle input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault() // Prevent page refresh
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/consultations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) throw new Error('Failed to submit')
+
+      // Success
+      setSubmitStatus({
+        type: 'success',
+        message: 'Thank you! We will contact you soon.'
+      })
+
+      // Clear form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      })
+
+    } catch (error) {
+      // Error
+      setSubmitStatus({
+        type: 'error',
+        message: 'Something went wrong. Please try again.'
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
   return (
     <section className="relative h-[600px] flex items-center">
       {/* Background Image with Overlay */}
@@ -10,8 +75,8 @@ const Hero = () => {
           <Image
             src="/intellectual.jpg"
             alt="Legal Background"
-            width={1900}  // Original image width
-            height={896}  // Original image height
+            width={1900}
+            height={896}
             className="object-cover w-full h-full"
             priority
             quality={100}
@@ -38,33 +103,64 @@ const Hero = () => {
 
         {/* Right Content - Form */}
         <div className="bg-white p-8 rounded-lg shadow-lg md:w-[400px] w-full">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">!FREE CONSULTATION</h2>
-          <form className="space-y-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">FREE CONSULTATION</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               placeholder="Name"
+              required
               className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
             />
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Email"
+              required
               className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
             />
             <input
               type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
               placeholder="Phone"
+              required
               className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
             />
             <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
               placeholder="Message"
+              required
               rows={4}
               className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-gray-500"
             />
+
+            {/* Show success/error message */}
+            {submitStatus.type && (
+              <div className={`p-3 rounded ${
+                submitStatus.type === 'success' 
+                  ? 'bg-green-100 text-green-700' 
+                  : 'bg-red-100 text-red-700'
+              }`}>
+                {submitStatus.message}
+              </div>
+            )}
+
             <button
               type="submit"
-              className="w-full bg-yellow-400 text-gray-900 py-3 rounded font-medium hover:bg-yellow-500 transition-colors"
+              disabled={isSubmitting}
+              className={`w-full bg-yellow-400 text-gray-900 py-3 rounded font-medium 
+                hover:bg-yellow-500 transition-colors
+                ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              SUBMIT YOUR MESSAGE
+              {isSubmitting ? 'Submitting...' : 'SUBMIT YOUR MESSAGE'}
             </button>
           </form>
         </div>

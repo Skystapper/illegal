@@ -92,6 +92,14 @@ export default function Navbar() {
           >
             ABOUT US
           </Link>
+
+          {/* Trademark Link - Now before ALL SERVICES */}
+          <Link 
+            href="/services/trademark" 
+            className={`hover:text-yellow-400 transition-colors ${pathname === '/services/trademark-registration' ? 'text-yellow-400' : ''}`}
+          >
+            TRADEMARK
+          </Link>
           
           {/* Services Dropdown */}
           <div 
@@ -100,7 +108,7 @@ export default function Navbar() {
           >
             <button 
               onClick={() => setIsServicesClicked(!isServicesClicked)}
-              className={`hover:text-yellow-400 transition-colors ${pathname.startsWith('/services') ? 'text-yellow-400' : ''}`}
+              className={`hover:text-yellow-400 transition-colors ${pathname.startsWith('/services') && pathname !== '/services/trademark-registration' ? 'text-yellow-400' : ''}`}
             >
               ALL SERVICES
             </button>
@@ -139,12 +147,6 @@ export default function Navbar() {
             </div>
           </div>
 
-          <Link 
-            href="/blog" 
-            className={`hover:text-yellow-400 transition-colors ${pathname === '/blog' ? 'text-yellow-400' : ''}`}
-          >
-            BLOG
-          </Link>
           <Link 
             href="/contact" 
             className={`hover:text-yellow-400 transition-colors ${pathname === '/contact' ? 'text-yellow-400' : ''}`}
