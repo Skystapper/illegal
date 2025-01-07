@@ -1,13 +1,13 @@
 export interface BaseMessage {
-  id: number
-  email: string
-  message: string
-  status: string
-  reminderDate: Date | null
-  createdAt: Date
-  updatedAt: Date
-}
-
+    id: number
+    email: string
+    message: string
+    status: string
+    reminderDate: Date | null
+    createdAt: Date
+    updatedAt: Date
+  }
+  
 export interface ContactMessage extends BaseMessage {
   type: 'contact'
   firstName: string

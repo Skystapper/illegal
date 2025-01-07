@@ -182,7 +182,7 @@ export default function AdminDashboard() {
                     <span className={`text-xs px-2 py-1 rounded-full ${
                       contact.status === 'pending' 
                         ? 'bg-yellow-100 text-yellow-800'
-                        : contact.status === 'responded'
+                        : contact.status === 'completed'
                         ? 'bg-green-100 text-green-800'
                         : 'bg-gray-100 text-gray-800'
                     }`}>

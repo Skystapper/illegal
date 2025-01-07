@@ -23,4 +23,31 @@ export async function PATCH(
       { status: 500 }
     )
   }
+}
+
+export async function GET(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const consultation = await prisma.consultation.findUnique({
+      where: {
+        id: parseInt(params.id)
+      }
+    })
+
+    if (!consultation) {
+      return NextResponse.json(
+        { error: 'Consultation not found' },
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json(consultation)
+  } catch (error) {
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    )
+  }
 } 
