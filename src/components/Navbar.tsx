@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { motion } from 'framer-motion'
 
 const serviceCategories = [
   {
@@ -44,9 +45,50 @@ const serviceCategories = [
 
 
 export default function Navbar() {
+  const router = useRouter()
   const pathname = usePathname()
   const [isServicesClicked, setIsServicesClicked] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  const handleConsultationClick = () => {
+    if (pathname !== '/') {
+      // Navigate to homepage
+      router.push('/')
+      // Store the scroll intent in sessionStorage
+      sessionStorage.setItem('scrollToConsultation', 'true')
+    } else {
+      // Already on homepage, just scroll
+      scrollToForm()
+    }
+  }
+
+  useEffect(() => {
+    // Check if we need to scroll after navigation
+    if (pathname === '/' && sessionStorage.getItem('scrollToConsultation')) {
+      sessionStorage.removeItem('scrollToConsultation')
+      // Small delay to ensure page is loaded
+      setTimeout(scrollToForm, 100)
+    }
+  }, [pathname])
+
+  const scrollToForm = () => {
+    const heroSection = document.getElementById('hero-section')
+    if (heroSection) {
+      const offset = 100
+      const elementPosition = heroSection.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+
+      // Trigger highlight
+      setTimeout(() => {
+        window.dispatchEvent(new Event('highlightForm'))
+      }, 500)
+    }
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -153,12 +195,12 @@ export default function Navbar() {
           >
             CONTACT US
           </Link>
-          <Link 
-            href="/consultation" 
+          <button
+            onClick={handleConsultationClick}
             className="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors"
           >
             FREE CONSULTATION
-          </Link>
+          </button>
         </div>
       </div>
     </nav>

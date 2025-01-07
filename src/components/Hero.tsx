@@ -1,8 +1,11 @@
 'use client'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const Hero = () => {
+  // Animation state
+  const [shouldHighlight, setShouldHighlight] = useState(false)
+  
   // Form state
   const [formData, setFormData] = useState({
     name: '',
@@ -17,6 +20,17 @@ const Hero = () => {
     message: string
   }>({ type: null, message: '' })
 
+  // Listen for highlight event
+  useEffect(() => {
+    const handleHighlight = () => {
+      setShouldHighlight(true)
+      setTimeout(() => setShouldHighlight(false), 1000)
+    }
+
+    window.addEventListener('highlightForm', handleHighlight)
+    return () => window.removeEventListener('highlightForm', handleHighlight)
+  }, [])
+
   // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -28,11 +42,11 @@ const Hero = () => {
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault() // Prevent page refresh
+    e.preventDefault()
     setIsSubmitting(true)
 
     try {
-      const response = await fetch('/api/consultations', {
+      const response = await fetch('/api/v1/consultations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +56,6 @@ const Hero = () => {
 
       if (!response.ok) throw new Error('Failed to submit')
 
-      // Success
       setSubmitStatus({
         type: 'success',
         message: 'Thank you! We will contact you soon.'
@@ -57,7 +70,6 @@ const Hero = () => {
       })
 
     } catch (error) {
-      // Error
       setSubmitStatus({
         type: 'error',
         message: 'Something went wrong. Please try again.'
@@ -68,16 +80,15 @@ const Hero = () => {
   }
 
   return (
-    <section className="relative h-[600px] flex items-center">
+    <section id="hero-section" className="relative h-[600px] flex items-center">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <div className="relative w-full h-full">
           <Image
             src="/intellectual.jpg"
             alt="Legal Background"
-            width={1900}
-            height={896}
-            className="object-cover w-full h-full"
+            fill
+            className="object-cover"
             priority
             quality={100}
           />
@@ -102,7 +113,15 @@ const Hero = () => {
         </div>
 
         {/* Right Content - Form */}
-        <div className="bg-white p-8 rounded-lg shadow-lg md:w-[400px] w-full">
+        <div className={`
+          relative bg-white p-8 rounded-lg shadow-lg md:w-[400px] w-full
+          ${shouldHighlight ? 'animate-highlight' : ''}
+        `}>
+          {/* Remove or modify the problematic overlay div */}
+          {shouldHighlight && (
+            <div className="absolute inset-0 rounded-lg animate-shockwave pointer-events-none" />
+          )}
+
           <h2 className="text-2xl font-bold text-gray-900 mb-6">FREE CONSULTATION</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input

@@ -1,5 +1,6 @@
 "use client"
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 interface PricingCardProps {
   title: string;
@@ -8,6 +9,18 @@ interface PricingCardProps {
 }
 
 const PricingCard = ({ title, price, features }: PricingCardProps) => {
+  // Store random positions in state to maintain consistency
+  const [positions] = useState(() => ({
+    beams: Array(3).fill(0).map(() => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100
+    })),
+    particles: Array(15).fill(0).map(() => ({
+      left: Math.random() * 100,
+      top: Math.random() * 100
+    }))
+  }))
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -17,17 +30,14 @@ const PricingCard = ({ title, price, features }: PricingCardProps) => {
     >
       <div className="relative flex-shrink-0">
         <div className="bg-burgundy-600 p-6 pb-20 relative overflow-hidden h-[200px]"> {/* Reduced height, increased bottom padding */}
-            {/* Multiple sweeping light beams */}
-            {[...Array(3)].map((_, i) => (
+            {/* Light beams with consistent positions */}
+            {positions.beams.map((pos, i) => (
               <motion.div
                 key={i}
                 className="absolute -inset-full"
                 animate={{
                   x: ['-100%', '200%'],
-                  y: [
-                    i === 0 ? '-100%' : '0%',
-                    i === 0 ? '200%' : '100%'
-                  ],
+                  y: [i === 0 ? '-100%' : '0%', i === 0 ? '200%' : '100%'],
                 }}
                 transition={{
                   duration: 7,
@@ -44,21 +54,21 @@ const PricingCard = ({ title, price, features }: PricingCardProps) => {
                     bg-gradient-to-r from-transparent via-white/20 to-transparent
                   `}
                   style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
+                    left: `${pos.left}%`,
+                    top: `${pos.top}%`,
                   }}
                 />
               </motion.div>
             ))}
   
-            {/* Floating particles */}
-            {[...Array(15)].map((_, i) => (
+            {/* Particles with consistent positions */}
+            {positions.particles.map((pos, i) => (
               <motion.div
                 key={`particle-${i}`}
                 className="absolute w-1 h-1 bg-white rounded-full"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
+                  left: `${pos.left}%`,
+                  top: `${pos.top}%`,
                 }}
                 animate={{
                   y: [-20, 20],

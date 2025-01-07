@@ -24,6 +24,29 @@ module.exports = {
           800: '#581427',
           900: '#4a1121',
         },
+      },
+      keyframes: {
+        highlight: {
+          '0%': { boxShadow: '0 0 0 0 rgba(234, 179, 8, 0.4)' },
+          '70%': { boxShadow: '0 0 0 20px rgba(234, 179, 8, 0)' },
+          '100%': { boxShadow: '0 0 0 0 rgba(234, 179, 8, 0)' }
+        },
+        shockwave: {
+          '0%': {
+            transform: 'scale(1)',
+            border: '0px solid rgba(234, 179, 8, 0.5)',
+            opacity: 1
+          },
+          '100%': {
+            transform: 'scale(1.3)',
+            border: '6px solid rgba(234, 179, 8, 0)',
+            opacity: 0
+          }
+        }
+      },
+      animation: {
+        highlight: 'highlight 1s ease-in-out',
+        shockwave: 'shockwave 1s ease-out'
       }
     },
   },

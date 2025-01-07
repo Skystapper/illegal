@@ -1,7 +1,10 @@
 'use client'
 import { useState } from 'react'
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { LogOut } from 'lucide-react'  // Add this import
+
 
 export default function AdminLayout({
   children,
@@ -9,9 +12,22 @@ export default function AdminLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
+  const isLoginPage = pathname === '/admin/login'
+
+  const handleLogout = async () => {
+    await signOut({ 
+      redirect: true,
+      callbackUrl: '/admin/login'
+    })
+  }
+
+  // Return a clean layout for login page
+  if (isLoginPage) {
+    return <>{children}</>
+  }
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100">   
       {/* Sidebar */}
       <div className="w-64 bg-white shadow-md">
         <div className="p-4 border-b">
@@ -45,6 +61,18 @@ export default function AdminLayout({
             </li>
             <li>
               <Link 
+                href="/admin/contacts" 
+                className={`block px-4 py-2 rounded-md ${
+                  pathname === '/admin/contacts' 
+                    ? 'bg-burgundy-600 text-white' 
+                    : 'hover:bg-gray-100'
+                }`}
+              >
+                Contacts
+              </Link>
+            </li>
+            <li>
+              <Link 
                 href="/admin/services" 
                 className={`block px-4 py-2 rounded-md ${
                   pathname === '/admin/services' 
@@ -55,8 +83,18 @@ export default function AdminLayout({
                 Services
               </Link>
             </li>
+            
           </ul>
         </nav>
+        <div className="p-4 border-t">
+    <button
+      onClick={handleLogout}
+      className="w-full px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-md transition-colors duration-200 flex items-center justify-center gap-2"
+    >
+      <LogOut className="w-5 h-5" /> {/* Optional icon */}
+      Logout
+    </button>
+  </div>
       </div>
 
       {/* Main Content */}

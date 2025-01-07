@@ -15,11 +15,20 @@ datasource db {
 
 // Define your models here
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  lastLogin     DateTime?
+  loginAttempts Int       @default(0)
+  lockedUntil   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // For tracking sessions
+  sessions      Session[]
+  
+  // For tracking login attempts and security events
+  securityLogs  SecurityLog[]
 }
 
 model Service {
@@ -32,15 +41,16 @@ model Service {
 }
 
 model Consultation {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String
-  phone     String
-  message   String   @db.Text
-  service   String?
-  status    String   @default("pending")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String
+  phone        String
+  message      String    @db.Text
+  service      String?
+  status       String    @default("pending")
+  reminderDate DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 }
 
 model PricingPlan {
@@ -67,4 +77,41 @@ model PricingPlanHistory {
   version     Int
   changedAt   DateTime @default(now())
   plan        PricingPlan @relation(fields: [planId], references: [id])
+}
+
+model Contact {
+  id           Int       @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  email        String
+  phone        String?
+  company      String?
+  subject      String
+  message      String    @db.Text
+  serviceType  String?
+  status       String    @default("pending")
+  reminderDate DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  lastActive   DateTime @default(now())
+  userAgent    String?
+  ipAddress    String?
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SecurityLog {
+  id        String    @id @default(cuid())
+  userId    String
+  event     String    // LOGIN_SUCCESS, LOGIN_FAILED, PASSWORD_CHANGED, etc.
+  ipAddress String?
+  userAgent String?
+  details   String?   // Additional JSON details
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
