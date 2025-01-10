@@ -14,7 +14,6 @@ import {
 import HeroSection from './sections/HeroSection'
 import ProcessTimeline from './sections/ProcessTimeline'
 import TrademarkTypes from './sections/TrademarkTypes'
-import BenefitsGrid from './sections/BenefitsGrid'
 import PricingSection from './sections/PricingSection'
 import FAQSection from './sections/FAQSection'
 import DocumentsRequired from './sections/DocumentsRequired'

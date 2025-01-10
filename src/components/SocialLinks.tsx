@@ -9,8 +9,9 @@ import {
   FaTelegram 
 } from 'react-icons/fa'
 import { SOCIAL_LINKS } from '@/types/contact'
+import { IconType } from 'react-icons'
 
-const iconMap: { [key: string]: React.ComponentType } = {
+const iconMap: { [key: string]: IconType } = {
   FaWhatsapp,
   FaLinkedin,
   FaInstagram,
