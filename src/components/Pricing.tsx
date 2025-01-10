@@ -23,11 +23,13 @@ const Pricing = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <PricingCard
-                title={plan.name}
-                price={plan.price.toString()}
-                features={plan.features}
-              />
+              <div className="w-full max-w-none">
+                <PricingCard
+                  title={plan.name}
+                  price={plan.price.toString()}
+                  features={plan.features}
+                />
+              </div>
             </motion.div>
           ))}
         </div>

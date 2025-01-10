@@ -35,7 +35,7 @@ export const defaultPricingPlans = [
   },
   {
     id: 3,
-    name: "Trademark Registration & Objection",
+    name: "Trademark",
     price: 2999,
     features: [
       "Trademark Application Filing",

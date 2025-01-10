@@ -168,3 +168,37 @@
     rgba(255, 255, 255, 0.05) 100%
   );
 }
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s infinite linear;
+}
+
+
+@keyframes border-animate {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+}
+
+.animate-border {
+  animation: border-animate 4s linear infinite;
+}

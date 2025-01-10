@@ -1,6 +1,6 @@
 "use client"
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useLayoutEffect } from 'react'
 
 interface PricingCardProps {
   title: string;
@@ -8,18 +8,36 @@ interface PricingCardProps {
   features: string[];
 }
 
-const PricingCard = ({ title, price, features }: PricingCardProps) => {
-  // Store random positions in state to maintain consistency
-  const [positions] = useState(() => ({
-    beams: Array(3).fill(0).map(() => ({
-      left: Math.random() * 100,
-      top: Math.random() * 100
-    })),
-    particles: Array(15).fill(0).map(() => ({
-      left: Math.random() * 100,
-      top: Math.random() * 100
-    }))
+// Initial placeholder positions
+const initialPositions = {
+  beams: Array(3).fill(0).map(() => ({
+    left: 50,
+    top: 50
+  })),
+  particles: Array(15).fill(0).map(() => ({
+    left: 50,
+    top: 50
   }))
+}
+
+const PricingCard = ({ title, price, features }: PricingCardProps) => {
+  const [positions, setPositions] = useState(initialPositions)
+  const [isClient, setIsClient] = useState(false)
+
+  // Use useLayoutEffect to update positions after hydration
+  useLayoutEffect(() => {
+    setIsClient(true)
+    setPositions({
+      beams: Array(3).fill(0).map(() => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100
+      })),
+      particles: Array(15).fill(0).map(() => ({
+        left: Math.random() * 100,
+        top: Math.random() * 100
+      }))
+    })
+  }, [])
 
   return (
     <motion.div
@@ -29,72 +47,75 @@ const PricingCard = ({ title, price, features }: PricingCardProps) => {
       className="w-full max-w-[380px] bg-white rounded-3xl shadow-lg overflow-hidden h-full flex flex-col" 
     >
       <div className="relative flex-shrink-0">
-        <div className="bg-burgundy-600 p-6 pb-20 relative overflow-hidden h-[200px]"> {/* Reduced height, increased bottom padding */}
-            {/* Light beams with consistent positions */}
-            {positions.beams.map((pos, i) => (
-              <motion.div
-                key={i}
-                className="absolute -inset-full"
-                animate={{
-                  x: ['-100%', '200%'],
-                  y: [i === 0 ? '-100%' : '0%', i === 0 ? '200%' : '100%'],
-                }}
-                transition={{
-                  duration: 7,
-                  delay: i * 2.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                <div 
-                  className={`
-                    absolute transform 
-                    ${i === 0 ? '-rotate-45' : i === 1 ? 'rotate-45' : 'rotate-0'}
-                    w-[60%] h-[200px]
-                    bg-gradient-to-r from-transparent via-white/20 to-transparent
-                  `}
-                  style={{
-                    left: `${pos.left}%`,
-                    top: `${pos.top}%`,
-                  }}
-                />
-              </motion.div>
-            ))}
-  
-            {/* Particles with consistent positions */}
-            {positions.particles.map((pos, i) => (
-              <motion.div
-                key={`particle-${i}`}
-                className="absolute w-1 h-1 bg-white rounded-full"
-                style={{
-                  left: `${pos.left}%`,
-                  top: `${pos.top}%`,
-                }}
-                animate={{
-                  y: [-20, 20],
-                  x: [-20, 20],
-                  opacity: [0, 1, 0],
-                  scale: [0, 1.5, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  delay: i * 0.3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-            ))}
+        <div className="bg-burgundy-600 p-6 pb-20 relative overflow-hidden h-[200px]">
+            {/* Only render animations after hydration */}
+            {isClient && (
+              <>
+                {positions.beams.map((pos, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute -inset-full"
+                    animate={{
+                      x: ['-100%', '200%'],
+                      y: [i === 0 ? '-100%' : '0%', i === 0 ? '200%' : '100%'],
+                    }}
+                    transition={{
+                      duration: 7,
+                      delay: i * 2.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <div 
+                      className={`
+                        absolute transform 
+                        ${i === 0 ? '-rotate-45' : i === 1 ? 'rotate-45' : 'rotate-0'}
+                        w-[60%] h-[200px]
+                        bg-gradient-to-r from-transparent via-white/20 to-transparent
+                      `}
+                      style={{
+                        left: `${pos.left}%`,
+                        top: `${pos.top}%`,
+                      }}
+                    />
+                  </motion.div>
+                ))}
+    
+                {positions.particles.map((pos, i) => (
+                  <motion.div
+                    key={`particle-${i}`}
+                    className="absolute w-1 h-1 bg-white rounded-full"
+                    style={{
+                      left: `${pos.left}%`,
+                      top: `${pos.top}%`,
+                    }}
+                    animate={{
+                      y: [-20, 20],
+                      x: [-20, 20],
+                      opacity: [0, 1, 0],
+                      scale: [0, 1.5, 0],
+                    }}
+                    transition={{
+                      duration: 4,
+                      delay: i * 0.3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                ))}
+              </>
+            )}
   
             {/* Content with flex layout for consistent spacing */}
             <div className="relative z-10 h-full flex flex-col">
-            <div className="min-h-[60px] flex items-start"> {/* Reduced title container height */}
-              <h3 className="text-2xl text-white leading-tight">{title}</h3>
+              <div className="min-h-[60px] flex items-start">
+                <h3 className="text-2xl text-white leading-tight">{title}</h3>
+              </div>
+              <div className="flex items-baseline text-white flex-wrap mb-4">
+                <span className="text-5xl font-bold leading-none">₹{price}</span>
+                <span className="ml-2 text-base whitespace-nowrap">+ gov. fees</span>
+              </div>
             </div>
-            <div className="flex items-baseline text-white flex-wrap mb-4"> {/* Added bottom margin */}
-              <span className="text-5xl font-bold leading-none">₹{price}</span>
-              <span className="ml-2 text-base whitespace-nowrap">+ gov. fees</span>
-            </div>
-          </div>
         </div>
   
           {/* Wave separator */}

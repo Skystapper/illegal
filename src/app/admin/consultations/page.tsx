@@ -2,6 +2,8 @@
 import { useState, useEffect } from 'react'
 import { StatusDropdown } from '@/components/StatusDropdown'
 import { ReminderCell } from '@/components/ReminderCell'
+import { ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import { MessageCell } from '@/components/MessageCell'
 
 interface Consultation {
@@ -11,9 +13,9 @@ interface Consultation {
   phone: string
   message: string
   status: string
+  service: string
   reminderDate: string | null
   createdAt: string
-
 }
 
 export default function ConsultationsPage() {
@@ -126,50 +128,72 @@ export default function ConsultationsPage() {
 
       <div className="bg-white rounded-lg shadow-sm">
         <div className="overflow-x-auto">
-        <table className="w-full">
-  <thead className="bg-gray-50">
-    <tr>
-      <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Name</th>
-      <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Email</th>
-      <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Phone</th>
-      <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Message</th>
-      <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th>
-      <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Date</th>
-      <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Reminder</th>
-    </tr>
-  </thead>
-  <tbody className="divide-y divide-gray-200">
-    {filteredConsultations.map((consultation) => (
-      <tr key={consultation.id}>
-        <td className="px-6 py-4 whitespace-nowrap text-center">{consultation.name}</td>
-        <td className="px-6 py-4 whitespace-nowrap text-center">{consultation.email}</td>
-        <td className="px-6 py-4 whitespace-nowrap text-center">{consultation.phone}</td>
-        <td className="px-6 py-4 group text-center">
-          <MessageCell 
-            id={consultation.id}
-            message={consultation.message}
-            type="consultation"
-          />
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap flex justify-center">
-          <StatusDropdown 
-            status={consultation.status} 
-            onStatusChange={(newStatus) => updateStatus(consultation.id, newStatus)} 
-          />
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap text-center">
-          {new Date(consultation.createdAt).toLocaleDateString()}
-        </td>
-        <td className="px-6 py-4 whitespace-nowrap flex justify-center">
-          <ReminderCell 
-            item={consultation}
-            onSetReminder={updateReminder}
-          />
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+          <table className="w-full">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Name</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Email</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Phone</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Service</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Message</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Status</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Date</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Reminder</th>
+                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Details</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {filteredConsultations.map((consultation) => (
+                <tr key={consultation.id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">{consultation.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">{consultation.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">{consultation.phone}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">{consultation.service}</td>
+                  <td className="px-6 py-4 group text-center">
+                    <p className="truncate max-w-xs">{consultation.message}</p>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap flex justify-center">
+                    <StatusDropdown 
+                      status={consultation.status} 
+                      onStatusChange={(newStatus) => updateStatus(consultation.id, newStatus)} 
+                    />
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    {new Date(consultation.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap flex justify-center">
+                    <ReminderCell 
+                      item={consultation}
+                      onSetReminder={updateReminder}
+                    />
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-center">
+                    <Link
+                      href={`/admin/messages/${consultation.id}?type=consultation`}
+                      className="inline-flex items-center justify-center w-10 h-10 rounded-lg relative group overflow-hidden"
+                    >
+                      {/* Animated background gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-burgundy-50 to-burgundy-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      {/* Continuous subtle pulse animation */}
+                      <div className="absolute inset-0 bg-burgundy-100 animate-pulse opacity-20" />
+                      
+                      {/* Main icon with hover effects */}
+                      <ArrowRight className="w-5 h-5 text-burgundy-600 transform 
+                        group-hover:scale-110 
+                        group-hover:translate-x-1 
+                        transition-all duration-300 
+                        relative z-10" 
+                      />
+                      
+                      {/* Optional: Secondary decorative elements */}
+                      <div className="absolute inset-0 border border-burgundy-200 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300" />
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
