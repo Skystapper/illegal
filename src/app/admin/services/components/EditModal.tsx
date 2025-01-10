@@ -18,7 +18,7 @@ export const EditModal = ({ plan, onClose, onSave }: EditModalProps) => {
     if (typeof plan.features === 'string') {
       try {
         return JSON.parse(plan.features)
-      } catch (e) {
+      } catch {
         return []
       }
     }

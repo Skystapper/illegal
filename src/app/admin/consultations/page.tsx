@@ -4,7 +4,6 @@ import { StatusDropdown } from '@/components/StatusDropdown'
 import { ReminderCell } from '@/components/ReminderCell'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { MessageCell } from '@/components/MessageCell'
 
 interface Consultation {
   id: number

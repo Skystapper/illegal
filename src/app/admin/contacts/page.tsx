@@ -3,7 +3,6 @@ import { ArrowRight, Calendar } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import { format } from 'date-fns'
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
 interface Contact {
   id: number
   firstName: string

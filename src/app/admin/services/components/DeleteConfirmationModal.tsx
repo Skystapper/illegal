@@ -66,7 +66,7 @@ export const DeleteConfirmationModal = ({ plan, onClose, onConfirm }: DeleteConf
 
           <div className="space-y-2">
             <p className="text-gray-700 font-medium">
-              To confirm deletion, please type "{plan.name}" below:
+            To confirm deletion, please type &quot;{plan.name}&quot; below:
             </p>
             <input
               type="text"
