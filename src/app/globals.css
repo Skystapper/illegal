@@ -4,6 +4,18 @@
 
 /* Add any custom styles here */
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -201,4 +213,19 @@
 
 .animate-border {
   animation: border-animate 4s linear infinite;
+}
+
+
+@layer components {
+  .nav-link {
+    @apply relative font-medium transition-colors duration-200 hover:text-yellow-600;
+  }
+
+  .nav-link::after {
+    @apply content-[''] absolute left-0 bottom-[-4px] w-0 h-[2px] bg-yellow-500 transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
 }

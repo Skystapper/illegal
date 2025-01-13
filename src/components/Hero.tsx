@@ -17,7 +17,7 @@ const Hero = () => {
   }, [])
 
   return (
-    <section id="hero-section" className="relative h-[600px] flex items-center">
+    <section id="hero-section" className="relative min-h-[700px] flex items-center py-16 md:py-24">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <div className="relative w-full h-full">
@@ -29,22 +29,22 @@ const Hero = () => {
             priority
             quality={100}
           />
-          <div className="absolute inset-0 bg-black/40" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
       </div>
 
       {/* Content Container */}
-      <div className="container mx-auto px-4 z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+      <div className="container mx-auto px-4 z-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-16">
         {/* Left Content */}
-        <div className="text-white md:w-1/2">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+        <div className="text-white w-full md:w-1/2 text-center md:text-left">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 md:mb-8 leading-tight">
             We help when<br />
-            You need us
+            <span className="text-yellow-400">You need us</span>
           </h1>
-          <p className="text-lg mb-8 text-gray-200 max-w-xl">
+          <p className="text-lg md:text-xl mb-8 md:mb-10 text-gray-100 max-w-2xl mx-auto md:mx-0 leading-relaxed">
             The highly qualified team of Legal, attorneys and consultants will be glad to provide necessary legal assistance.
           </p>
-          <button className="bg-white text-gray-900 px-8 py-3 rounded hover:bg-gray-100 transition-colors font-medium">
+          <button className="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-10 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
             PURCHASE NOW
           </button>
         </div>

@@ -44,7 +44,7 @@ const PricingCard = ({ title, price, features }: PricingCardProps) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-[380px] bg-white rounded-3xl shadow-lg overflow-hidden h-full flex flex-col" 
+      className="w-full bg-white rounded-3xl shadow-lg overflow-hidden h-full flex flex-col mx-auto"
     >
       <div className="relative flex-shrink-0">
         <div className="bg-burgundy-600 p-6 pb-20 relative overflow-hidden h-[200px]">

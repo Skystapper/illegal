@@ -7,7 +7,7 @@
 - **RAM**: 512 MB
 - **Storage**: 20 GB SSD
 - **Transfer**: 1 TB
-- **Operating System**: Linux/Unix (Bitnami)
+- **Operating System**: Linux/Unix (Bitnami with Node.js)
 - **Processor**: 1 vCPU
 
 ### Creating AWS Lightsail Instance
@@ -52,6 +52,24 @@ sudo apt-get upgrade
 sudo apt-get install htop git
 ```
 
+### MySQL Installation
+```bash
+# Install MySQL Server
+sudo apt install mysql-server
+
+# Start MySQL
+sudo systemctl start mysql
+
+# Enable MySQL on boot
+sudo systemctl enable mysql
+
+# Secure MySQL installation
+sudo mysql_secure_installation
+
+# Check MySQL status
+sudo systemctl status mysql
+```
+
 ### Check System Resources
 ```bash
 # Check memory
@@ -66,25 +84,24 @@ htop
 
 ### Important System Locations
 - Home directory: `/home/bitnami`
-- Web root: `/home/bitnami/htdocs`
 - Node.js location: `/opt/bitnami/node`
 - Nginx config: `/etc/nginx`
 - System services: `/etc/systemd/system`
 
 ### Network Configuration
-1. Go to AWS Lightsail Console.
-2. Select your instance.
-3. Go to "Networking" tab.
+1. Go to AWS Lightsail Console
+2. Select your instance
+3. Go to "Networking" tab
 4. Default open ports:
    - SSH (22)
    - HTTP (80)
    - HTTPS (443)
 
 ### System Limitations
-- RAM: Limited to 512 MB.
-- Swap: ~634 MB.
-- CPU: 1 vCPU.
-- Storage: 20 GB SSD.
+- RAM: Limited to 512 MB
+- Swap: ~634 MB
+- CPU: 1 vCPU
+- Storage: 20 GB SSD
 
 ### Memory Management
 ```bash
@@ -101,8 +118,8 @@ free -h
 
 ### Initial Project Setup
 ```bash
-# Navigate to web directory
-cd /home/bitnami/htdocs
+# Navigate to home directory
+cd /home/bitnami
 
 # Clone your project
 git clone https://github.com/your-username/your-repo.git project_name
@@ -290,12 +307,12 @@ npm install
 
 ### Create System Service for Next.js
 
-#### Create Service File
+1. **Create service file**:
 ```bash
 sudo nano /etc/systemd/system/nextjs.service
 ```
 
-#### Add Service Configuration
+2. **Add service configuration**:
 ```ini
 [Unit]
 Description=Next.js App
@@ -304,19 +321,18 @@ After=network.target
 [Service]
 Type=simple
 User=bitnami
-WorkingDirectory=/home/bitnami/htdocs/project_name
+WorkingDirectory=/home/bitnami/illegal
 Environment=NODE_ENV=production
 Environment=PORT=3000
 Environment="NODE_OPTIONS=--max-old-space-size=300"
-Environment=PATH=/opt/bitnami/node/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ExecStart=/opt/bitnami/node/bin/npm start
+ExecStart=npm start
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
 ```
 
-#### Enable and Start Service
+3. **Enable and start service**:
 ```bash
 # Reload systemd
 sudo systemctl daemon-reload
@@ -333,13 +349,46 @@ sudo systemctl status nextjs
 
 ### Nginx Setup
 
-#### Step 1: Stop and disable Apache
+#### Remove Unnecessary Services
+
+1. **Stop and Remove Apache**:
 ```bash
 # Stop Apache
 sudo /opt/bitnami/ctlscript.sh stop apache
 
 # Disable Apache
 sudo systemctl disable apache2
+
+# Remove Apache
+sudo apt-get remove apache2
+```
+
+2. **Clean Up Bitnami Defaults**:
+```bash
+# Remove htdocs directory
+sudo rm -rf /home/bitnami/htdocs
+
+# Remove stack directory
+sudo rm -rf /opt/bitnami/apache2
+sudo rm -rf /opt/bitnami/php
+```
+
+3. **Verify Removal**:
+```bash
+# Check if Apache is running
+sudo systemctl status apache2
+
+# Check if port 80 is free
+sudo netstat -tulpn | grep :80
+```
+
+4. **Clean Up System**:
+```bash
+# Remove dependencies
+sudo apt-get autoremove
+
+# Clean package cache
+sudo apt-get clean
 ```
 
 #### Step 2: Install and configure Nginx

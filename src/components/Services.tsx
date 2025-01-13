@@ -21,18 +21,18 @@ const ServiceCard = ({ icon, title, description }: { icon: React.ReactNode, titl
 
 const Services = () => {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-12 md:py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        {/* Main Content */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">India's Largest Professional Platform</h2>
-          <p className="text-gray-600 leading-relaxed">
+        {/* Main Content - Updated spacing and text sizes */}
+        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">India's Largest Professional Platform</h2>
+          <p className="text-sm md:text-base text-gray-600 leading-relaxed px-4">
             At e-Legal India, we specialize in delivering tailored, reliable solutions for businesses at every stage of their journey. Our customer-centric platform, powered by advanced machine learning, ensures efficiency and precision in meeting your business needs.
           </p>
         </div>
 
-        {/* Service Cards */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Service Cards - Updated grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
           <ServiceCard
             icon={
               <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
