@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Define your models here
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  lastLogin     DateTime?
+  loginAttempts Int       @default(0)
+  lockedUntil   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // For tracking sessions
+  sessions      Session[]
+  
+  // For tracking login attempts and security events
+  securityLogs  SecurityLog[]
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @db.Text
+  price       Decimal
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Consultation {
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String
+  phone        String
+  message      String    @db.Text
+  service      String?
+  status       String    @default("pending")
+  reminderDate DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model PricingPlan {
+  id          Int      @id @default(autoincrement())
+  name        String   // e.g., "Basic", "Standard", "Premium"
+  price       Decimal
+  features    String   @db.Text  // We'll store features as JSON string
+  isActive    Boolean  @default(true)
+  version     Int      @default(1)  // For version history
+  orderIndex Int      @default(0)  // Add this line if not already present
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // For history tracking
+  previousVersion PricingPlanHistory[]
+}
+
+model PricingPlanHistory {
+  id          Int      @id @default(autoincrement())
+  planId      Int
+  name        String
+  price       Decimal
+  features    String   @db.Text  // JSON string here too
+  version     Int
+  changedAt   DateTime @default(now())
+  plan        PricingPlan @relation(fields: [planId], references: [id])
+}
+
+model Contact {
+  id           Int       @id @default(autoincrement())
+  firstName    String
+  lastName     String
+  email        String
+  phone        String?
+  company      String?
+  subject      String
+  message      String    @db.Text
+  serviceType  String?
+  status       String    @default("pending")
+  reminderDate DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  lastActive   DateTime @default(now())
+  userAgent    String?
+  ipAddress    String?
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SecurityLog {
+  id        String    @id @default(cuid())
+  userId    String
+  event     String    // LOGIN_SUCCESS, LOGIN_FAILED, PASSWORD_CHANGED, etc.
+  ipAddress String?
+  userAgent String?
+  details   String?   // Additional JSON details
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
