@@ -229,3 +229,47 @@ body {
     @apply w-full;
   }
 }
+
+
+/* Modern Select Styling */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+/* Custom dropdown styling */
+select option,
+select optgroup {
+  color: #374151; /* text-gray-700 */
+  background-color: white;
+}
+
+select option {
+  padding: 0.5rem 1rem;
+}
+
+select option:hover,
+select option:focus {
+  background-color: #fef3c7; /* yellow-50 */
+  cursor: pointer;
+}
+
+select optgroup {
+  font-weight: 600;
+  color: #111827; /* text-gray-900 */
+}
+
+/* For Firefox */
+select option:checked {
+  background-color: #fef3c7; /* yellow-50 */
+}
+
+/* For Webkit browsers */
+select option:checked {
+  background: #fef3c7 !important; /* yellow-50 */
+}

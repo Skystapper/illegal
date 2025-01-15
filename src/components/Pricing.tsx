@@ -5,7 +5,7 @@ import { defaultPricingPlans } from '@/data/defaultPricingPlans'
 
 const Pricing = () => {
   return (
-    <section className="py-16 md:py-24 px-4 md:px-8 bg-gray-50">
+    <section id="pricing-section" className="py-16 md:py-24 px-4 md:px-8 bg-gray-50">
       <div className="max-w-[1600px] mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-3 md:mb-4">
           Simple, Transparent Pricing

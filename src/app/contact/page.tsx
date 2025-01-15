@@ -19,8 +19,7 @@ const contactInfo = [
     icon: <FaPhoneAlt className="w-5 h-5" />,
     title: "Call Us",
     details: [
-      "+91 123 456 7890",
-      "+91 098 765 4321"
+      "+91 099242 22695"
     ]
   },
   {
@@ -35,8 +34,9 @@ const contactInfo = [
     icon: <FaMapMarkerAlt className="w-5 h-5" />,
     title: "Visit Us",
     details: [
-      "123 Legal Avenue, Business District",
-      "Mumbai, Maharashtra 400001"
+      "306, Silver Trade Center,",
+      "Opp Utran Power Station Mota Varachha Road,",
+      "VIP Cir, Surat, Gujarat 394105"
     ]
   }
 ]
