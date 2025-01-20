@@ -17,7 +17,7 @@ const Footer = () => {
               />
               <div>
                 <h3 className="text-white font-bold text-xl">e-Legal India</h3>
-                <p className="text-sm text-yellow-400">ESTABLISHED IN 2023</p>
+                <p className="text-sm text-yellow-400">ESTABLISHED IN 2020</p>
               </div>
             </Link>
             <p className="text-sm leading-relaxed">
@@ -81,7 +81,7 @@ const Footer = () => {
                 <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
-                <span>contact@elegalindia.com</span>
+                <span>admin@e-legalindia.com</span>
               </li>
             </ul>
           </div>

@@ -122,8 +122,8 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col text-white">
-              <span className="text-xl font-bold">E-Legal</span>
-              <span className="text-sm">India</span>
+              <span className="text-xl font-bold">E-Legal India</span>
+              {/* <span className="text-sm">India</span> */}
             </div>
           </Link>
 

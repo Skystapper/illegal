@@ -26,8 +26,7 @@ const contactInfo = [
     icon: <FaEnvelope className="w-5 h-5" />,
     title: "Email Us",
     details: [
-      "contact@elegal.in",
-      "support@elegal.in"
+      "admin@e-legalindia.com"
     ]
   },
   {

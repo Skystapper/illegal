@@ -5,7 +5,7 @@ import { useEffect, useState, useLayoutEffect } from 'react'
 interface PricingCardProps {
   title: string;
   price: string;
-  features: string[];
+  features: { text: string; included: boolean }[];
 }
 
 // Initial placeholder positions
@@ -150,21 +150,33 @@ const PricingCard = ({ title, price, features }: PricingCardProps) => {
       <div className="px-6 pt-2 pb-8 bg-white flex-1 flex flex-col">
         <ul className="space-y-4 flex-1">
           {features.map((feature, index) => (
-            <li key={index} className="flex items-start text-gray-700">
+            <li 
+              key={index} 
+              className={`flex items-start ${feature.included ? 'text-gray-700' : 'text-gray-400'}`}
+            >
               <svg 
-                className="w-5 h-5 mr-2 text-burgundy-600 mt-0.5 shrink-0" 
+                className={`w-5 h-5 mr-2 ${feature.included ? 'text-burgundy-600' : 'text-gray-400'} mt-0.5 shrink-0`}
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
               >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M5 13l4 4L19 7" 
-                />
+                {feature.included ? (
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M5 13l4 4L19 7" 
+                  />
+                ) : (
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M6 18L18 6M6 6l12 12" 
+                  />
+                )}
               </svg>
-              <span className="text-sm">{feature}</span>
+              <span className="text-sm">{feature.text}</span>
             </li>
           ))}
         </ul>

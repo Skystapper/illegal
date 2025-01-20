@@ -1,5 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { 
   Shield, 
   Clock, 
@@ -43,6 +44,12 @@ const benefits = [
 ]
 
 export default function WhyChooseUs() {
+  const router = useRouter()
+
+  const handleContactClick = () => {
+    router.push('/contact#contact-form')
+  }
+
   return (
     <section className="py-20 bg-burgundy-900 text-white">
       <div className="container mx-auto px-4">
@@ -81,7 +88,10 @@ export default function WhyChooseUs() {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <button className="bg-yellow-400 text-black px-8 py-4 rounded-lg font-semibold hover:bg-yellow-300 transition-colors">
+          <button 
+            onClick={handleContactClick}
+            className="bg-yellow-400 text-black px-8 py-4 rounded-lg font-semibold hover:bg-yellow-300 transition-colors"
+          >
             Start Your Registration Now
           </button>
         </motion.div>

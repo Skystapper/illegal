@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import Pricing from '@/components/Pricing'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 interface ServicePageProps {
   title: string
@@ -54,6 +55,12 @@ export default function ServicePageTemplate({
     triggerOnce: true,
     threshold: 0.1
   })
+
+  const router = useRouter()
+
+  const handleContactClick = () => {
+    router.push('/contact#contact-form')
+  }
 
   return (
     <div className="min-h-screen">
@@ -363,6 +370,7 @@ export default function ServicePageTemplate({
               Join thousands of successful businesses who trust e-legal india™
             </p>
             <motion.button
+              onClick={handleContactClick}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg text-lg font-medium

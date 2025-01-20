@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import Image from 'next/image'
 import { Playfair_Display } from 'next/font/google'
 import { LegalScaleIcon, HandshakeIcon, AwardIcon } from './icons'
+import { Target, Users, Lightbulb } from 'lucide-react'
 import { getImagePath } from '../utils/getImagePath'
 
 const playfair = Playfair_Display({ subsets: ['latin'] })
@@ -139,7 +140,7 @@ const About = () => {
                 { number: "5000+", label: "Documents Processed" },
                 { number: "95%", label: "Success Rate" },
                 { number: "1000+", label: "Company Registrations" },
-                { number: "2000+", label: "Trademarks Filed" }
+                { number: "5000+", label: "Trademarks Filed" }
               ].map((stat, index) => (
                 <motion.div
                   key={index}
@@ -162,29 +163,29 @@ const About = () => {
             </div>
           </motion.div>
 
-          {/* Team Section */}
+          {/* Our Values Section */}
           <div className="text-center mb-16">
             <h2 className={`${playfair.className} text-4xl font-bold text-gray-900 mb-8`}>
-              Our Expert Team
+              Our Core Values
             </h2>
             <div className="grid md:grid-cols-3 gap-12">
               {[
                 {
-                  name: "Rajesh Kumar",
-                  role: "Documentation Head",
-                  image: "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg"
+                  title: "Excellence in Service",
+                  description: "We strive to exceed expectations with our commitment to quality and precision in every legal document we process.",
+                  icon: Target
                 },
                 {
-                  name: "Priya Sharma",
-                  role: "Trademark Specialist",
-                  image: "https://images.pexels.com/photos/5669619/pexels-photo-5669619.jpeg"
+                  title: "Client-Centric Approach",
+                  description: "Your success is our priority. We provide personalized solutions tailored to your specific business needs.",
+                  icon: Users
                 },
                 {
-                  name: "Amit Patel",
-                  role: "Compliance Expert",
-                  image: "https://images.pexels.com/photos/5668867/pexels-photo-5668867.jpeg"
+                  title: "Innovation & Efficiency",
+                  description: "Leveraging modern technology to streamline legal processes while maintaining the highest standards of accuracy.",
+                  icon: Lightbulb
                 }
-              ].map((member, index) => (
+              ].map((value, index) => (
                 <motion.div
                   key={index}
                   className="relative group"
@@ -192,18 +193,17 @@ const About = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.2 }}
                 >
-                  <div className="relative h-80 mb-6 overflow-hidden rounded-xl">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
+                  <div className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow">
+                    <div className="mb-4 flex justify-center">
+                      <value.icon className="w-12 h-12 text-burgundy-600" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
+                      {value.title}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {value.description}
+                    </p>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2">
-                    {member.name}
-                  </h3>
-                  <p className="text-burgundy-600">{member.role}</p>
                 </motion.div>
               ))}
             </div>
