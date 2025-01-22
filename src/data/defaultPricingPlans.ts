@@ -5,8 +5,8 @@ export const defaultPricingPlans = [
     price: 1499,
     features: [
       { text: "Trademark Application Filing", included: true },
-      { text: "Creative Logo Design By dedicated Logo Designer (3 Logo design choices)", included: false },
-      { text: "Expertise TM Search Report", included: false },
+      { text: "Creative Logo", included: false },
+      { text: "Expertise TM Search Report", included: true },
       { text: "Free Class Search", included: true },
       { text: "Free Consultation till you get TM Mark", included: true },
       { text: "Drafting & Filing by TM Expert", included: true },
@@ -25,7 +25,7 @@ export const defaultPricingPlans = [
     price: 1999,
     features: [
       { text: "Trademark Application Filing", included: true },
-      { text: "Creative Logo Design By dedicated Logo Designer (3 Logo design choices)", included: true },
+      { text: "Creative Logo", included: true },
       { text: "Expertise TM Search Report", included: true },
       { text: "Free Class Search", included: true },
       { text: "Free Consultation till you get TM Mark", included: true },
@@ -45,7 +45,7 @@ export const defaultPricingPlans = [
     price: 2999,
     features: [
       { text: "Trademark Application Filing", included: true },
-      { text: "Creative Logo Design By dedicated Logo Designer (3 Logo design choices)", included: false },
+      { text: "Creative Logo", included: false },
       { text: "Expertise TM Search Report", included: true },
       { text: "Free Class Search", included: true },
       { text: "Free Consultation till you get TM Mark", included: true },
@@ -53,8 +53,8 @@ export const defaultPricingPlans = [
       { text: "Use TM next to your brand", included: true },
       { text: "Trademark Objection Reply", included: true },
       { text: "Trademark Hearing", included: false },
-      { text: "Call, Chat, Email Support", included: false },
-      { text: "No hidden charges", included: false }
+      { text: "Call, Chat, Email Support", included: true },
+      { text: "No hidden charges", included: true }
     ],
     orderIndex: 2,
     version: 1
@@ -65,7 +65,7 @@ export const defaultPricingPlans = [
     price: 5499,
     features: [
       { text: "Trademark Application Filing", included: true },
-      { text: "Creative Logo Design By dedicated Logo Designer (3 Logo design choices)", included: false },
+      { text: "Creative Logo", included: false },
       { text: "Expertise TM Search Report", included: true },
       { text: "Free Class Search", included: true },
       { text: "Free Consultation till you get TM Mark", included: true },
@@ -85,7 +85,7 @@ export const defaultPricingPlans = [
     price: 5999,
     features: [
       { text: "Trademark Application Filing", included: true },
-      { text: "Creative Logo Design By dedicated Logo Designer (3 Logo design choices)", included: true },
+      { text: "Creative Logo", included: true },
       { text: "Expertise TM Search Report", included: true },
       { text: "Free Class Search", included: true },
       { text: "Free Consultation till you get TM Mark", included: true },
