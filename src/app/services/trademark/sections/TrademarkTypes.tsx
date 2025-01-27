@@ -1,7 +1,8 @@
 'use client'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Briefcase, HeartHandshake, Award, Shapes, Music, Palette } from 'lucide-react'
+import { Briefcase, HeartHandshake, Award, Shapes, Music, Palette, ArrowRight } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const types = [
   {
@@ -43,6 +44,8 @@ const types = [
 ]
 
 export default function TrademarkTypes() {
+  const router = useRouter()
+
   return (
     <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -80,6 +83,22 @@ export default function TrademarkTypes() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="text-center mt-12"
+        >
+          <button
+            onClick={() => router.push('/services/trademark/classes')}
+            className="bg-burgundy-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-burgundy-700 transition-colors inline-flex items-center gap-2"
+          >
+            Learn More About Classes
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </motion.div>
       </div>
     </section>
   )

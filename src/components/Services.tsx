@@ -14,7 +14,7 @@ const ServiceCard = ({ icon, title, description }: { icon: React.ReactNode, titl
       >
         LEARN MORE 
         <span className="ml-2">→</span>
-      </Link>
+      </Link> 
     </div>
   )
 }

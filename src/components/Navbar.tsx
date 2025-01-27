@@ -5,8 +5,21 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import SearchBox from './SearchBox'
 
 const serviceCategories = [
+  {
+    title: "Legal & Documentation",
+    services: [
+      "Trademark Registration",
+      "Digital Signature Certificate",
+      "Rent Deed Drafting",
+      "Partnership Deed Drafting",
+      "Sale Deed Drafting",
+      "Lease Deed Drafting",
+      "Legal Notice"
+    ]
+  },
   {
     title: "Company Registration",
     services: [
@@ -16,27 +29,6 @@ const serviceCategories = [
       "Partnership Firm",
       "Limited Liability Partnership",
       "Sole Proprietorship"
-    ]
-  },
-  {
-    title: "Certification",
-    services: [
-      "ISO Certification",
-      "Digital Signature Certificate",
-      "Shop Act",
-      "Trademark",
-      "IE Code"
-    ]
-  },
-  {
-    title: "Legal Services",
-    services: [
-      "Rent Deed Drafting",
-      "Partnership Deed Drafting",
-      "Sale Deed Drafting",
-      "Lease Deed Drafting",
-      "Joint Venture Deed",
-      "Legal Notice"
     ]
   }
 ]
@@ -173,26 +165,34 @@ export default function Navbar() {
               <div 
                 className={`absolute top-full left-0 mt-2 w-[800px] bg-white rounded-lg shadow-xl 
                            transform -translate-x-1/3 transition-all duration-200 ease-in-out
-                           ${isServicesClicked ? 'opacity-100 visible' : 'opacity-0 invisible group-hover:opacity-100 group-hover:visible'}`}
+                           ${isServicesClicked ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
                            onMouseLeave={() => {
                             if (!isServicesClicked) {
                               setIsServicesClicked(false)
                             }
                            }}
               >
-                <div className="grid grid-cols-3 gap-4 p-6">
+                <div className="p-4 border-b border-gray-200">
+                  <SearchBox onClose={() => setIsServicesClicked(false)} />
+                </div>
+                <div className="grid grid-cols-2 gap-12 p-8">
                   {serviceCategories.map((category, index) => (
                     <div key={index} className="text-gray-800">
-                      <h3 className="font-bold text-lg mb-3 text-burgundy-600">{category.title}</h3>
-                      <ul className="space-y-2">
+                      <h3 className="text-xl font-bold mb-6 text-burgundy-600 border-b-2 border-burgundy-200 pb-3">
+                        {category.title}
+                      </h3>
+                      <ul className="space-y-4">
                         {category.services.map((service, serviceIndex) => (
                           <li key={serviceIndex}>
                             <Link 
                               href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="hover:text-burgundy-600 transition-colors text-sm"
+                              className="text-base hover:text-burgundy-600 transition-colors flex items-center group"
                               onClick={() => setIsServicesClicked(false)}
                             >
-                              {service}
+                              <span className="w-2 h-2 rounded-full bg-gray-300 mr-3 group-hover:bg-burgundy-600 transition-colors"></span>
+                              <span className="font-medium hover:translate-x-1 transition-transform duration-200">
+                                {service}
+                              </span>
                             </Link>
                           </li>
                         ))}
