@@ -11,24 +11,63 @@ const serviceCategories = [
   {
     title: "Legal & Documentation",
     services: [
-      "Trademark Registration",
-      "Digital Signature Certificate",
-      "Rent Deed Drafting",
-      "Partnership Deed Drafting",
-      "Sale Deed Drafting",
-      "Lease Deed Drafting",
-      "Legal Notice"
+      {
+        name: "Trademark Registration",
+        route: "trademark"
+      },
+      {
+        name: "Digital Signature Certificate",
+        route: "digital-signature-certificate"
+      },
+      {
+        name: "Rent Deed Drafting",
+        route: "rent-deed-drafting"
+      },
+      {
+        name: "Partnership Deed Drafting",
+        route: "partnership-deed-drafting"
+      },
+      {
+        name: "Sale Deed Drafting",
+        route: "sale-deed-drafting"
+      },
+      {
+        name: "Lease Deed Drafting",
+        route: "lease-deed-drafting"
+      },
+      {
+        name: "Legal Notice",
+        route: "legal-notice"
+      }
     ]
   },
   {
     title: "Company Registration",
     services: [
-      "Private Limited Company",
-      "Public Limited Company",
-      "One Person Company",
-      "Partnership Firm",
-      "Limited Liability Partnership",
-      "Sole Proprietorship"
+      {
+        name: "Private Limited Company",
+        route: "private-limited-company"
+      },
+      {
+        name: "Public Limited Company",
+        route: "public-limited-company"
+      },
+      {
+        name: "One Person Company",
+        route: "one-person-company"
+      },
+      {
+        name: "Partnership Firm",
+        route: "partnership-firm"
+      },
+      {
+        name: "Limited Liability Partnership",
+        route: "limited-liability-partnership"
+      },
+      {
+        name: "Sole Proprietorship",
+        route: "sole-proprietorship"
+      }
     ]
   }
 ]
@@ -185,13 +224,13 @@ export default function Navbar() {
                         {category.services.map((service, serviceIndex) => (
                           <li key={serviceIndex}>
                             <Link 
-                              href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
+                              href={`/services/${service.route}`}
                               className="text-base hover:text-burgundy-600 transition-colors flex items-center group"
                               onClick={() => setIsServicesClicked(false)}
                             >
                               <span className="w-2 h-2 rounded-full bg-gray-300 mr-3 group-hover:bg-burgundy-600 transition-colors"></span>
                               <span className="font-medium hover:translate-x-1 transition-transform duration-200">
-                                {service}
+                                {service.name}
                               </span>
                             </Link>
                           </li>
@@ -285,16 +324,16 @@ export default function Navbar() {
                         <h3 className="text-yellow-400 text-sm font-semibold mb-2">{category.title}</h3>
                         <ul className="space-y-1">
                           {category.services.map((service) => (
-                            <li key={service}>
+                            <li key={service.name}>
                               <Link
-                                href={`/services/${service.toLowerCase().replace(/\s+/g, '-')}`}
+                                href={`/services/${service.route}`}
                                 className="block py-1 text-sm text-white hover:text-yellow-400"
                                 onClick={() => {
                                   setIsMobileServicesOpen(false)
                                   setIsMobileMenuOpen(false)
                                 }}
                               >
-                                {service}
+                                {service.name}
                               </Link>
                             </li>
                           ))}
